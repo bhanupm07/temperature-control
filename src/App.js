@@ -1,25 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
 
-function App() {
+export default function App() {
+  const [temp, setTemp] = useState(10);
+  const [bgColor, setBgColor] = useState("#1a5ba6");
+
+  const increment = () => {
+    if (temp === 30) {
+      return;
+    } else {
+      setTemp(temp + 1);
+    }
+  };
+
+  const decrement = () => {
+    if (temp === 0) {
+      return;
+    } else {
+      setTemp(temp - 1);
+    }
+  };
+
+  useEffect(() => {
+    if (temp > 15 && temp <= 25) {
+      setBgColor("#F85700");
+    } else if (temp <= 15 && temp >= 5) {
+      setBgColor("#1a5ba6");
+    } else if (temp > 25) {
+      setBgColor("red");
+    } else if (temp < 5) {
+      setBgColor("#83C8E4");
+    }
+  }, [temp]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="card">
+      <span className="temp-text" style={{ backgroundColor: bgColor }}>
+        {temp}°C
+      </span>
+      <div className="buttons-div">
+        <button onClick={decrement} className="btn">
+          -
+        </button>
+        <button onClick={increment} className="btn">
+          +
+        </button>
+      </div>
     </div>
   );
 }
-
-export default App;
